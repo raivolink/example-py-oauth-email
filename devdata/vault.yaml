@@ -1,0 +1,5 @@
+email_oauth_google_microsoft:
+  tenant: my.tenant.com
+  client_id: ********-a6ca-48f8-****-7a99a85a25c8
+  client_secret: jH****RTH5vHy*****-zZgPI*********s83za26
+  token: null
