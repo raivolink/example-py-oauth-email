@@ -68,7 +68,8 @@ e-mails for you. For this, certain settings are required:
 
 ## Environment setup
 
-To use secerts and mail user and recipients you need to have environment variables. You can add them by creating `.env` file in project root. Example of the file is available in [`devtata/.env.template`](/devdata/.env.template).
+To use secerts and mail user and recipients you need to have environment variables. You can add them by creating `.env` file in project root.
+Example of the file is available in [`devtata/.env.template`](/devdata/.env.template).
 
 ## Vault setup
 

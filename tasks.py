@@ -53,6 +53,7 @@ def microsoft_oauth_flow(exchange_mail: Exchange) -> None:
         exchange_mail.generate_oauth_url,
         exchange_mail.get_oauth_token,
     )
+
     MAIL_SECRET["token"] = token
     vault.set_secret(MAIL_SECRET)
 
@@ -76,6 +77,7 @@ def init_oauth_flow(
     url = generate_oauth_url(MAIL_SECRET["client_id"])
     response_url = get_auth_url_from_browser(url)
     token = get_oauth_token(MAIL_SECRET["client_secret"], response_url)
+
     # returning token as string for vault compability
     return json.dumps(token)
 
@@ -93,17 +95,19 @@ def get_auth_url_from_browser(url: str) -> str:
     browser = Selenium()
     options = ChromeOptions()
     options.add_argument("-disable-search-engine-choice-screen")
+
     browser.open_available_browser(
         url,
         browser_selection="chrome",
-        download=False,
         options=options,
     )
+
     browser.wait_until_location_contains(
         "code=",
         timeout=300,
         message="Please authenticate and accept the consent faster",
     )
+
     response_url = browser.get_location()
     browser.close_all_browsers()
     return response_url
@@ -118,6 +122,7 @@ def send_test_mail(exchange_mail: Exchange) -> None:
     with log.suppress_variables():
         # need to change token to JSON to be able to refresh
         token_as_json = json.loads(MAIL_SECRET["token"])
+
         exchange_mail.authorize(
             username=USERNAME,
             autodiscover=False,
@@ -127,6 +132,7 @@ def send_test_mail(exchange_mail: Exchange) -> None:
             client_secret=MAIL_SECRET["client_secret"],
             token=token_as_json,
         )
+
         exchange_mail.send_message(
             recipients=RECIPIENTS,
             subject="OAuth2 Exchange message from RPA robot",
